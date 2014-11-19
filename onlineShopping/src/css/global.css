@@ -1,0 +1,22 @@
+/* 
+    Document   : global
+    Created on : Oct 23, 2013, 10:05:06 PM
+    Author     : changliu
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.small_font{font-size: 16px;font-family:sans-serif; font-weight: 100; color:#777;}
+.mid_font{font-size: 16px;font-family:sans-serif; font-weight: 200; color:#777;}
+.title_font{font-size: 24px;font-family:sans-serif; font-weight: 400; color:#000;}.title_font{font-size: 24px;font-family:sans-serif; font-weight: 400; color:#000;}
+.white_title_font{font-size: 24px;font-family:sans-serif; font-weight: 400; color:#fff;}
+.white_mid_font{font-size: 16px;font-family:sans-serif; font-weight: 100; color:rgba(255,255,255,.75);}
+.white_small_font{font-size: 14px;font-family:sans-serif; font-weight: 100; color:rgba(255,255,255,.75);}
+
+.shadow{box-shadow: 5px 5px 5px #ccc; -webkit-box-shadow:5px 5px 5px #ccc;}
+.bottom_shadow{box-shadow: 5px 5px 5px 5px #777; -webkit-box-shadow: 5px 5px 5px 5px #777;}
+.red_underscore{border-bottom:5px; border-bottom-color: #e3766e; border-bottom-style: solid;}

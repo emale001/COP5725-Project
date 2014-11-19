@@ -1,0 +1,29 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div id="footer" class="container" style="margin-top:30px;">
+    <div class="row">
+        <div class="span4"></div>
+        <div>
+            <ul class="nav nav-pills" style="margin-bottom:2px;">
+                <li><a href="#" class="mid_font">fistname</a></li>
+                <li><a href="manage_car.jsp" class="mid_font">Edwin</a></li>
+                <li><a href="#" class="mid_font">firstname</a></li>
+                <li><a href="#" class="mid_font">firstname</a></li>
+                <li><a href="#" class="mid_font">firstname</a></li> 
+            </ul>                  
+        </div>
+    </div>    
+    <div class="row">
+        <div class="span4"></div>
+        <div>
+            <ul class="nav nav-pills" style="margin-bottom:2px;">
+                <li><a href="#" class="mid_font">All rights reserved@COP5725. Team 4</a></li>
+            </ul>                  
+        </div>
+    </div> 
+</div>
+</body>
+</html>
+<%
+    System.gc();
+%>

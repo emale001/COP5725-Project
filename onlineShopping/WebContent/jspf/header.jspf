@@ -1,0 +1,121 @@
+<%-- any content can be specified here e.g.: --%>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>OnlineShopping.com</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="css/global.css" rel="stylesheet">
+        <link href="css/home_page.css" rel="stylesheet">
+        <link href="css/jquery-ui.css" rel="stylesheet">
+        <link href="css/bootstrap-select.min.css" rel="stylesheet">
+        <link href="css/validationEngine.jquery.css" rel="stylesheet">
+        <link href="css/SelectCar.css" rel="stylesheet">
+        <link href="css/reserve_car.css" rel="stylesheet">
+
+        <link href="css/jquery-ui-timepicker-addon.css" rel="stylesheet">
+        <script src="js/jquery-1.10.1.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery-ui-sliderAccess.js"></script>
+        <script src="js/jquery-ui-timepicker-addon.js"></script>
+        <script src="js/bootstrap-select.min.js"></script>
+        <script src="js/jquery.validationEngine-en.js"></script>
+        <script src="js/jquery.validationEngine.js"></script>
+        <script src="js/bootstrap-carousel.js"></script>
+    </head>
+    <body style="z-index:0;">
+        <!-- register and login in-->
+        <div class="container">
+            <ul class="nav nav-pills pull-right">
+                <form id='signout_form' method='post'>
+                   
+                    <input id='signout_flag' type='hidden' value='signout' name='user_action'/>
+                </form>
+            </ul>
+        </div>
+       
+        <!--navigation-->
+        <div class ="container">
+            <div class="row">
+                <div class="span1"></div>
+                <div>
+                    <ul class="nav nav-pills" style="margin-bottom:2px;">
+                        <li><a href="Index.jsp" class="title_font">OnlineShopping.com</a></li>
+                        <li id="index_tab" class="red_underscore"><a href="Index.jsp" class="mid_font">Shop</a></li>
+                        <!--<li><a href="#" class="mid_font">Car type</a></li>-->
+                        <li id="about_us_tab"><a href="about_us.jsp" class="mid_font">About us</a></li>
+                    </ul>                  
+                </div>
+            </div>
+        </div>
+        <div class="devider"></div>
+        <!--register panel-->
+        <div id="regiister_panel" class="modal hide fade" style="border:0px; width:520px; padding-bottom:20px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Register</h3>
+            </div>
+            <div id="" style='margin:0px 20px 0px 20px;'>
+                <form id="user_register_form" method="post">
+                    <a href="#" onclick='$("#regiister_panel").modal("hide");
+                            $("#signin_panel").modal("show");' style="float:right;">sign in</a>
+                    <h4 class="form-style-heading mid_font">Welcome to iRental.com</h4>
+                    <input id="signup_email" name="email" type="text" class="input-block-level validate[required,custom[email]]" placeholder="Email address" style='width:300px;'><br/>
+                    <input id="signup_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[8], maxSize[16]]" placeholder="Password" style='width:300px;'><br/>
+                    <input type="password" class="input-block-level validate[equals[signup_password]]" placeholder="Confirm Password" style='width:300px;'>
+                    <div class="control-group">
+                        <div class="controls pull-right">
+                            <button type="submit" class="btn btn-primary" onclick="">Create Account</button>
+                        </div>
+                    </div>
+                    <input id='register_flag' type="hidden" value="register" name="user_action"></input>
+                </form>
+            </div>
+        </div>
+        <!--signin panel-->
+        <div id="signin_panel" class="modal hide fade" style="border:0px; width:520px; padding-bottom:20px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Sign in</h3>
+            </div>
+            <div id=""style='margin:0px 20px 0px 20px;'>
+                <form id="user_signin_form" method="post">
+                    <a href="#" onclick='$("#signin_panel").modal("hide");
+                            $("#regiister_panel").modal("show");' style="float:right;">register</a>
+                    <h4 class="form-style-heading mid_font">Welcome to iRental.com</h4>
+                    <input id="signin_email" name="email" type="text" class="input-block-level validate[required,custom[email]]" placeholder="Email address" style='width:300px;'><br/>
+                    <input id="signin_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[8], maxSize[16]]" placeholder="Password" style='width:300px;'><br/>
+                    <div class="control-group">
+                        <div class="controls pull-right">
+                            <button type="submit" class="btn btn-primary" onclick="">Sign in</button>
+                        </div>
+                    </div>
+                    <!--save some information needed to post to the server-->
+                    <input id='signin_flag' type="hidden" value="signin" name="user_action"></input>
+                </form>
+            </div>
+        </div>
+        <script>
+                        $(document).ready(function() {
+                            $("#user_register_form").validationEngine('attach',
+                                    {
+                                        promptPosition: "topLeft",
+                                        scroll: false,
+                                        autoHidePrompt: true
+                                    });
+                            $("#user_signin_form").validationEngine('attach',
+                                    {
+                                        promptPosition: "topLeft",
+                                        scroll: false,
+                                        autoHidePrompt: true
+                                    });
+                        });
+                        function signout()
+                        {
+                            $("#signout_form").submit();
+                        }
+        </script>
+

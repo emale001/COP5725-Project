@@ -1,0 +1,23 @@
+/*
+Theme Name: Team4zone
+*/
+
+p.woocommerce-info {overflow:hidden}
+
+#header #cart .heading a span {background:none;}
+
+div.product {}
+div.product div.images{float: left;
+width: 345px;margin-bottom:50px}
+div.product div.summary{float: left;
+width: 345px;margin-bottom:50px}
+div.product div.woocommerce-tabs{width:100%;overflow:hidden}
+div.product div.woocommerce-tabs ul.tabs{border-bottom: 1px solid #ddd;
+margin-bottom: 25px;overflow:hidden;list-style:none;margin:0;padding:0;}
+div.product div.woocommerce-tabs ul.tabs li{float:left;border:1px solid #fff}									
+div.product div.woocommerce-tabs ul.tabs li a{display:block;padding:10px 25px;}									
+div.product div.woocommerce-tabs div.entry-content{margin-top:25px}
+div.product div.woocommerce-tabs ul.tabs li.description_tab{}
+div.product div.woocommerce-tabs ul.tabs li.additional_information_tab{}
+div.product div.woocommerce-tabs ul.tabs li.reviews_tab{}
+div.product div.woocommerce-tabs ul.tabs li.active{border:1px solid #ddd;border-bottom:1px solid #fff}

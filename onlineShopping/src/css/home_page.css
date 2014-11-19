@@ -1,0 +1,20 @@
+/* 
+    Document   : home_page
+    Created on : Oct 25, 2013, 5:27:43 PM
+    Author     : changliu
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.devider{box-shadow: 0 4px 4px 0 rgba(0,0,0,.4); -webkit-box-shadow: 0 4px 4px 0 rgba(0,0,0,.4); width:100%;height:4px;z-index:1;position:relative;}
+#main_content{background-image:url('../img/bg.png');height: 660px; z-index:0;position: relative;}
+#reserve_panel{height:550px;width:330px;background-color:rgba(0,0,0,.55);top:4px;left:750px;position:relative;}
+.reserve_input{width:260px;height:16px;left:20px;position:relative; -webkit-border-radius:0px;border-radius:0px;}
+.reserve_select{width:270px;height:26px;left:20px;position:relative; -webkit-border-radius:0px;border-radius:0px;}
+.reserve_desc{position:relative;left:20px;}
+.section_divider{margin-bottom:20px;position:relative;left:15px;width:290px;border-bottom:1px; border-bottom-style:solid;border-bottom-color:rgba(255,255,255,.55);}
+#info_bar{top:-220px; background-color:rgba(255, 255, 255, 0.73); width:400px; height:110px;position:relative;}
