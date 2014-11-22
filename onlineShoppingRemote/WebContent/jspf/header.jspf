@@ -1,10 +1,102 @@
-<%-- any content can be specified here e.g.: --%>
+ <%-- any content can be specified here e.g.: --%>
+<%@page import="util.Encryptor"%>
+<%@ page pageEncoding="UTF-8" %>
 
+<%@page import="manager.UserManager"%>
+<%@page import="entity.User"%>
+
+ <%
+    // keep register/sign in messages(i.e. wrong email or password/ email has been userd.)
+    String userMsg = "";
+    try {
+        // action indicates whether it's register or sign in or sign out
+        String action = request.getParameter("user_action");
+        String actionshopping = request.getParameter("user_action_shopping");
+		System.out.println(action +" "+ actionshopping);
+        // handle register
+        if (action.compareTo("register") == 0) {
+            String email = request.getParameter("email");
+            if (email != null) {
+                try {
+                    String password = request.getParameter("password");
+                    // encrypt password
+                    Encryptor encryptor = new Encryptor();
+                    password = encryptor.getMD5Str(password);
+                    User user = new User();
+                    user.email = email;
+                    user.password = password;
+                    UserManager mgnr = new UserManager();
+                    int id = mgnr.createUser(user);
+                    // if register successed, set session(let user sign in)
+                    if (id != -1) {
+                        session = request.getSession();
+                        session.setAttribute("userid", id);
+                        // set message
+                    } else {
+                        userMsg = "Email has been registered";
+                    }
+                    // other exceptions could be database connection problems
+                } catch (Exception ex) {
+                    userMsg = "Register failed.";
+                    System.err.println(ex);
+                }
+            }
+            // handle sign in
+        } else if (action.compareTo("signin") == 0) {
+            String email = request.getParameter("email");
+            if (email != null) {
+                try {
+                    String password = request.getParameter("password");
+                    // encrypt password
+                    Encryptor encryptor = new Encryptor();
+                    password = encryptor.getMD5Str(password);
+                    
+                    User user;
+                    UserManager mgnr = new UserManager();
+                    // encrypt password
+                    //byte[] bytesOfMessage = password.getBytes("UTF-8");
+                    //MessageDigest md = MessageDigest.getInstance("MD5");
+                    //password = md.digest(bytesOfMessage).toString();
+                    user = mgnr.getUser(email, password);
+                    // if successfully signed in, set session
+                    if (user != null) {
+                        session = request.getSession();
+                        session.setAttribute("userid", user.userid);
+                       // response.sendRedirect("index.jsp");
+                       response.sendRedirect("view_products.jsp");
+                        // set message
+                    } else {
+                        userMsg = "Wrong email or password.";
+                    }
+                    // other exceptions could be database connection problems    
+                } catch (Exception ex) {
+                    userMsg = "Login failed.";
+                    
+                }
+            }
+            // handle sign out
+        } else if (action.compareTo("signout") == 0) {
+            session = request.getSession();
+            session.removeAttribute("userid");
+            response.sendRedirect("index.jsp");
+            return;
+        }
+        else if (action.equals("myaccount")) {
+        	response.sendRedirect("myAccount.jsp");
+        	
+        }
+        else if (action.compareTo("shoppingcart") == 0){
+        	response.sendRedirect("shoppingCart.jsp");
+        }
+    } catch (Exception e) {
+        // no need to handle the exception
+    }
+%> 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>OnlineShopping.com</title>
+        <title>Team4Zone.com</title>
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap-responsive.css" rel="stylesheet">
         <link href="css/global.css" rel="stylesheet">
@@ -28,31 +120,89 @@
     </head>
     <body style="z-index:0;">
         <!-- register and login in-->
-        <div class="container">
+      
+ 		<div class="container">
             <ul class="nav nav-pills pull-right">
-                <form id='signout_form' method='post'>
-                   
-                    <input id='signout_flag' type='hidden' value='signout' name='user_action'/>
+                <form id="signout_form" method="post"> 
+              
+                     <%
+                        try {
+                            session = request.getSession();
+                            int uid = Integer.parseInt(session.getAttribute("userid").toString());
+                            UserManager mgnr = new UserManager();
+                            User user = mgnr.getUsersById(uid);
+                            if (user != null) {
+                                int role = user.role;
+                                String link = "#";
+                                switch (role) {
+                                        case 1:
+                                        link = "edit_user.jsp";
+                                        break;
+                              
+                                }
+                                out.print("<li><a href='" + link + "' class='small_font'>welcome, " + user.email + "</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='signout();'>sign out</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='myAccount();'>MyAccount</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
+                               
+                            } else {
+                                out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a></li>");
+                            }
+                        } catch (Exception ex) {
+                            out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a></li>");
+                        }
+                    %> 
+                    <input id="signout_flag" type="hidden" value="signout" name="user_action"/>
+                    
                 </form>
+               
             </ul>
-        </div>
-       
+        </div> 
+       <%
+            if (userMsg.compareTo("") != 0) {
+                out.println("<div class='alert pull-right' style='margin:0px 130px 0px 20px;'>"
+                        + "<button type='button' class='close' data-dismiss='alert'>&times;</button>"
+                        + "<strong>Warning!</strong>"
+                        + userMsg + "</div>");
+            }
+        %>         
+        
+        <!--dummy form to access action--> 
+        <div class="container">
+          
+                <form id="shopping_cart_form" method="post"> 
+                       <input id="signout_flag" type="hidden" value="shoppingcart" name="user_action"/>  
+                </form>
+         
+        </div> 
+          <!--dummy form to access action--> 
+        <div class="container">
+            
+                <form id="myaccount_form" method="post"> 
+                       <input id="signout_flag" type="hidden" value="myaccount" name="user_action"/>  
+                </form>
+           
+        </div> 
+        
         <!--navigation-->
         <div class ="container">
             <div class="row">
-                <div class="span1"></div>
+               
                 <div>
                     <ul class="nav nav-pills" style="margin-bottom:2px;">
-                        <li><a href="Index.jsp" class="title_font">OnlineShopping.com</a></li>
-                        <li id="index_tab" class="red_underscore"><a href="Index.jsp" class="mid_font">Shop</a></li>
+                        <li><a href="index.jsp" class="title_font">Team4Zone.com</a></li>
+                        <li id="index_tab" class="red_underscore"><a href="index.jsp" class="mid_font">Home</a></li>
+                          <li id="product_tab"><a href="view_products.jsp" class="mid_font">Products</a></li>
+                         <li id="product_tab"><a href="bid_products.jsp" class="mid_font">Bid Products</a></li>
                         <!--<li><a href="#" class="mid_font">Car type</a></li>-->
                         <li id="about_us_tab"><a href="about_us.jsp" class="mid_font">About us</a></li>
+                        <!-- <li id="about_us_tab"><a href="login.jsp" class="mid_font">Login</a></li> -->
+                       
+                        
+                       
                     </ul>                  
                 </div>
             </div>
         </div>
-        <div class="devider"></div>
-        <!--register panel-->
+        
+         <!--register panel-->
         <div id="regiister_panel" class="modal hide fade" style="border:0px; width:520px; padding-bottom:20px;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -62,7 +212,151 @@
                 <form id="user_register_form" method="post">
                     <a href="#" onclick='$("#regiister_panel").modal("hide");
                             $("#signin_panel").modal("show");' style="float:right;">sign in</a>
-                    <h4 class="form-style-heading mid_font">Welcome to iRental.com</h4>
+                    <h4 class="form-style-heading mid_font">Welcome to Team4Zone.com</h4>
+                    <input id="signup_email" name="email" type="text" class="input-block-level validate[required,custom[email]]" placeholder="Email address" style='width:300px;'><br/>
+                    <input id="signup_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[3], maxSize[16]]" placeholder="Password" style='width:300px;'><br/>
+                    <input type="password" class="input-block-level validate[equals[signup_password]]" placeholder="Confirm Password" style='width:300px;'>
+                    <div class="control-group">
+                        <div class="controls pull-right">
+                            <button type="submit" class="btn btn-primary" onclick="">Create Account</button>
+                        </div>
+                    </div>
+                    <input id='register_flag' type="hidden" value="register" name="user_action"></input>
+                </form>
+            </div>
+        </div>
+        
+          <!--signin panel-->
+        <div id="signin_panel" class="modal hide fade" style="border:0px; width:520px; padding-bottom:20px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Sign in</h3>
+            </div>
+            <div id=""style='margin:0px 20px 0px 20px;'>
+                <form id="user_signin_form" method="post">
+                    <a href="#" onclick='$("#signin_panel").modal("hide");
+                            $("#regiister_panel").modal("show");' style="float:right;">register</a>
+                    <h4 class="form-style-heading mid_font">Welcome to Team4Zone.com</h4>
+                    <input id="signin_email" name="email" type="text" class="input-block-level validate[required,custom[email]]" placeholder="Email address" style='width:300px;'><br/>
+                    <input id="signin_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[3], maxSize[16]]" placeholder="Password" style='width:300px;'><br/>
+                    <div class="control-group">
+                        <div class="controls pull-right">
+                            <button type="submit" class="btn btn-primary" onclick="">Sign in</button>
+                        </div>
+                    </div>
+                    <!--save some information needed to post to the server-->
+                    <input id='signin_flag' type="hidden" value="signin" name="user_action"></input>
+                </form>
+            </div>
+        </div>
+      <!--  <form class="form-inline" role="form">
+  <div class="form-group">
+    <div class="input-group">
+      <label class="sr-only" for="exampleInputEmail2">Email address</label>
+      <div class="input-group-addon">@</div>
+      <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="exampleInputPassword2">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox"> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-default">Sign in</button>
+</form> -->
+       
+       <!--  <div class="span5"></div>
+     <form  method="post"  class="form_inline" role="form" style="margin-left: 400px" >
+  <div class="form-group">
+    <div class="input-group">
+      <label class="sr-only" for="exampleInputEmail2">Email address</label>
+      <div class="input-group-addon">@</div>
+      <input type="email" name="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="exampleInputPassword2">Password</label>
+    <input type="password" name="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox"> Remember me
+    </label>
+  </div>
+  <button type="submit" name="action" value="signin" class="btn btn-default">Sign in</button>
+   -->
+  <%-- <%
+  try {
+  	String action = request.getParameter("action");
+   String email = request.getParameter("email");
+    		String password = request.getParameter("password");
+    		Encryptor en = new Encryptor();
+    String digest = en.getMD5Str(password);
+    UserManager um = new UserManager();
+   
+    User user = null;
+    session = request.getSession();
+    int userid = 0;
+    /* session.setAttribute("iduser", user.userid);
+	String id = session.getAttribute("iduser").toString();
+	userid = Integer.parseInt(id); */
+    if (action.equals("signin")){
+    	if (email != null && digest != null) {
+    	user = um.getUser(email, digest);
+    
+    	session.setAttribute("iduser", user.userid);
+    	String id = session.getAttribute("iduser").toString();
+    	userid = Integer.parseInt(id);
+    	request.setAttribute("email", user.email);
+    	response.sendRedirect("view_products.jsp");
+    	}
+    	else if (userid == 0) {
+    	//	user = (User) session.getAttribute("user");
+    		response.sendRedirect("index.jsp");
+    	
+    	}
+    	else {
+    		user = (User)session.getAttribute("user");
+        	session.setAttribute("user", user);
+        	response.sendRedirect("view_products.jsp");
+    	}
+    	
+    	/* if (user != null) {
+    	response.sendRedirect("view_products.jsp");
+    	}
+    	else {
+    		out.print("user not logged in");
+    		response.sendRedirect("index.jsp");
+    	} */
+    }
+    
+    
+  
+  
+} catch (Exception ex) {
+    
+}
+  
+  
+  %> --%>
+
+
+        <div class="devider"></div>
+        <!--register panel-->
+       <!--  <div id="regiister_panel" class="modal hide fade" style="border:0px; width:520px; padding-bottom:20px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Register</h3>
+            </div>
+            <div id="" style='margin:0px 20px 0px 20px;'>
+                <form id="user_register_form" method="post">
+                    <a href="#" onclick='$("#regiister_panel").modal("hide");
+                            $("#signin_panel").modal("show");' style="float:right;">sign in</a>
+                    <h4 class="form-style-heading mid_font">Welcome to Team4Zone.com</h4>
                     <input id="signup_email" name="email" type="text" class="input-block-level validate[required,custom[email]]" placeholder="Email address" style='width:300px;'><br/>
                     <input id="signup_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[8], maxSize[16]]" placeholder="Password" style='width:300px;'><br/>
                     <input type="password" class="input-block-level validate[equals[signup_password]]" placeholder="Confirm Password" style='width:300px;'>
@@ -74,9 +368,9 @@
                     <input id='register_flag' type="hidden" value="register" name="user_action"></input>
                 </form>
             </div>
-        </div>
+        </div> -->
         <!--signin panel-->
-        <div id="signin_panel" class="modal hide fade" style="border:0px; width:520px; padding-bottom:20px;">
+       <!--   <div id="signin_panel" class="modal hide fade" style="border:0px; width:520px; padding-bottom:20px;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3>Sign in</h3>
@@ -85,7 +379,7 @@
                 <form id="user_signin_form" method="post">
                     <a href="#" onclick='$("#signin_panel").modal("hide");
                             $("#regiister_panel").modal("show");' style="float:right;">register</a>
-                    <h4 class="form-style-heading mid_font">Welcome to iRental.com</h4>
+                    <h4 class="form-style-heading mid_font">Welcome to Team4Zone.com</h4>
                     <input id="signin_email" name="email" type="text" class="input-block-level validate[required,custom[email]]" placeholder="Email address" style='width:300px;'><br/>
                     <input id="signin_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[8], maxSize[16]]" placeholder="Password" style='width:300px;'><br/>
                     <div class="control-group">
@@ -93,11 +387,11 @@
                             <button type="submit" class="btn btn-primary" onclick="">Sign in</button>
                         </div>
                     </div>
-                    <!--save some information needed to post to the server-->
+                    save some information needed to post to the server
                     <input id='signin_flag' type="hidden" value="signin" name="user_action"></input>
                 </form>
             </div>
-        </div>
+        </div>  -->
         <script>
                         $(document).ready(function() {
                             $("#user_register_form").validationEngine('attach',
@@ -117,5 +411,20 @@
                         {
                             $("#signout_form").submit();
                         }
+                        
+                        function shoppingCart() 
+                        {
+                        	$("#shopping_cart_form").submit();
+                        }
+                        function myAccount() {
+                        	$("#myaccount_form").submit();
+                        }
         </script>
+        
+        <script >
+       
+		</script>
 
+ 
+ 
+ 

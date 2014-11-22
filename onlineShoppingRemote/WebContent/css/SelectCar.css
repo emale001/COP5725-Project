@@ -1,0 +1,32 @@
+/* 
+    Document   : SelectCar
+    Created on : Nov 6, 2013, 4:13:36 PM
+    Author     : mac
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.devider{box-shadow: 0 4px 4px 0 rgba(0,0,0,.4); -webkit-box-shadow: 0 4px 4px 0 rgba(0,0,0,.4); width:100%;height:4px;z-index:1;position:relative;}
+#main_content_select_car{background-image:url('../img/bg2.png'); height: 860px; z-index:0;position: relative;}
+#reserve_car_panel{height:500px;width:250px;background-color:rgba(0,0,0,.55);top:4px;left:750px;position:relative;}
+.reserve_input{width:260px;height:16px;left:20px;position:relative; -webkit-border-radius:0px;border-radius:0px;}
+.reserve_select{width:270px;height:26px;left:20px;position:relative; -webkit-border-radius:0px;border-radius:0px;}
+.reserve_desc{position:relative;left:20px;}
+.indent {left: 40px;}
+.section_divider_select_car{margin-bottom:20px;position:relative;left:15px;width:220px;border-bottom:1px; border-bottom-style:solid;border-bottom-color:rgba(255,255,255,.55);}
+#info_bar{top:-220px; background-color:rgba(255, 255, 255, 0.73); width:400px; height:110px;position:relative;}
+#select_table{top:-550px;  width:600px; height:600px;position:relative; left:100px;}
+.table_divider{left:50px; top:210px; position:relative;width:500px;border-bottom:1px; border-bottom-style:solid; border-bottom-color:rgba(0,0,0,.55);}
+.column_width{width:150px;}
+.section_divider_select_car_list{margin-bottom:120px; top: 470px;position:relative;left:15px;width:600px;border-bottom:1px; border-bottom-style:solid;border-bottom-color:rgba(0,0,0,.55);}
+#left_tab{top:-450px;background-color:rgba(0,0,0,.10); width:180px; height:70px; left: 80px;-webkit-border-radius:0px; position:relative; }
+.left_t{ position:relative;left: 50px;top: 28px; }
+#middle_tab{ border:1px; border-style:solid; border-color:rgb(192,192,192); top:-520px; background-color:rgba(0,0,0,.10); width:180px; height:70px; left: 265px; -webkit-border-radius:0px; position:relative; }
+.middle_t{ position:relative; left: 50px; top:-42px;}
+.blue{background-color: #FFF568; height:70px; width:15px; position:relative;}
+#right_tab{ top:-590px; background-color:rgba(0,0,0,.10); width:180px; height:70px;left: 450px; -webkit-border-radius:0px; position:relative; }
+.right_t{position:relative; left:50px;top: 28px;}
