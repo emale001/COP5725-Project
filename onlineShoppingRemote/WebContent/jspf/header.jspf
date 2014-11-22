@@ -81,8 +81,8 @@
             response.sendRedirect("index.jsp");
             return;
         }
-        else if (action.equals("myaccount")) {
-        	response.sendRedirect("myAccount.jsp");
+        else if (action.equals("mybids")) {
+        	response.sendRedirect("MyBids.jsp");
         	
         }
         else if (action.compareTo("shoppingcart") == 0){
@@ -140,7 +140,7 @@
                                         break;
                               
                                 }
-                                out.print("<li><a href='" + link + "' class='small_font'>welcome, " + user.email + "</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='signout();'>sign out</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='myAccount();'>MyAccount</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
+                                out.print("<li><a href='" + link + "' class='small_font'>welcome, " + user.email + "</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='signout();'>sign out</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='myBids();'>My Bids</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
                                
                             } else {
                                 out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a></li>");
@@ -175,8 +175,8 @@
           <!--dummy form to access action--> 
         <div class="container">
             
-                <form id="myaccount_form" method="post"> 
-                       <input id="signout_flag" type="hidden" value="myaccount" name="user_action"/>  
+                <form id="mybids_form" method="post"> 
+                       <input id="signout_flag" type="hidden" value="mybids" name="user_action"/>  
                 </form>
            
         </div> 
@@ -416,8 +416,8 @@
                         {
                         	$("#shopping_cart_form").submit();
                         }
-                        function myAccount() {
-                        	$("#myaccount_form").submit();
+                        function myBids() {
+                        	$("#mybids_form").submit();
                         }
         </script>
         
