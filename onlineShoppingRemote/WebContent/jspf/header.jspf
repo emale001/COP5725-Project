@@ -12,7 +12,7 @@
         // action indicates whether it's register or sign in or sign out
         String action = request.getParameter("user_action");
         String actionshopping = request.getParameter("user_action_shopping");
-		System.out.println(action +" "+ actionshopping);
+		//System.out.println(action +" "+ actionshopping);
         // handle register
         if (action.compareTo("register") == 0) {
             String email = request.getParameter("email");
@@ -62,6 +62,7 @@
                     if (user != null) {
                         session = request.getSession();
                         session.setAttribute("userid", user.userid);
+                        session.setAttribute("user", user);
                        // response.sendRedirect("index.jsp");
                        response.sendRedirect("view_products.jsp");
                         // set message
@@ -78,6 +79,7 @@
         } else if (action.compareTo("signout") == 0) {
             session = request.getSession();
             session.removeAttribute("userid");
+            session.removeAttribute("user");
             response.sendRedirect("index.jsp");
             return;
         }

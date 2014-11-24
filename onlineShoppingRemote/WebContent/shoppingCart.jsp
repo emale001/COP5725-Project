@@ -67,16 +67,19 @@
         
          </div>
             <form method="post">
-                <table class="table" style="margin-left: 10px">
+                <table class="table table-condensed" style="margin-left: 10px">
                     <tr>
                         <th></th>
-                        <th> name</th>
-                        <th> description</th> 
-                        <th> price </th>
+                        <th> Name</th>
+                      <!--   <th> Description</th>  -->
+                        <th> Price </th>
 
-                        <th> category</th>
-                      
+                        <th> Category</th>
+                      	<th>Quantity </th>
+                      	<th>Total Price </th>
                         <th></th>
+                        <th></th>
+                        
                     </tr>
                     <%
                         try {
@@ -90,23 +93,34 @@
                             session = request.getSession();
                             User user = (User) session.getAttribute("user");
                             if (action == null) {
-
-                                productlist = mngr.listAll();
+                            	System.out.println(action+user.email+"displaying cart first time");
+                                productlist = cmgr.getUserShoppingCart(user);
                             } 
-                            else if (action.compareTo("addtocart") == 0) {
+                             else if (action.equals("deletefromcart")) {
                             	if (user != null) {
                             		 System.out.println(action);
-                            		int iditem = Integer.parseInt(request.getParameter("iditem"));
-                            	 int exist = cmgr.insertInCart(iditem, user);
-                            	 if (exist != -1){
-                            	 out.println(action+ ": item has been added to your cart");
-                            	 productlist = mngr.listAll();
-                            	 }
-                            	 else {
+                            		//int iditem = Integer.parseInt(request.getParameter("iditem"));
+                            	int idcartitem = Integer.parseInt(request.getParameter("idcartitem"));
+                            	 int exist = cmgr.deleteFromCart(idcartitem);
+                            	 productlist = cmgr.getUserShoppingCart(user);
+                            	}
+                            	/*  else {
                             		 out.println(action+ ": item is already in your cart");
                             		 productlist = mngr.listAll();
-                            	 }
+                            	 } */
                             	}
+                             else if (action.equals("updatecart")){
+                            	 System.out.println(action);
+                            	
+                            	 int quantity = Integer.parseInt(request.getParameter("quantity"));
+                            	 System.out.println(quantity);
+                            	// request.setAttribute("quantity", quantity);
+                            	 int iditem = Integer.parseInt(request.getParameter("iditem"));
+                            	 int idcartitem= Integer.parseInt(request.getParameter("idcartitem"));
+                            	 cmgr.updateCartQuantity(quantity, iditem, user, idcartitem);
+                            	 	
+                            	productlist = cmgr.getUserShoppingCart(user);                             
+                            	 }
                             	else {
                             	
                                 int iditem = Integer.parseInt(request.getParameter("iditem"));
@@ -114,53 +128,36 @@
                               productlist = mngr.listAll();
                                 response.sendRedirect("view_products.jsp");
                             	}
-                            } 
-                            Iterator<Product> itr2 = productlist.iterator();
-                            while (itr2.hasNext()) {
-                                info = itr2.next();
+                             
+                            Iterator<Product> itr = productlist.iterator();
+                            while (itr.hasNext()) {
+                                info = itr.next();
                                 
-                             /*    out.print(
-                                		"<form method=\"post\">"
-                                		+"<div class=\"row\">"
-                                		+ "<div class=\"col-sm-6 col-md-4\">"
-                                		+ " <div class=\"thumbnail\">"
-                                		+ "<img src=\"" +info.getImagepath()+"\" alt=\"...\">"
-                                		+ "<div class=\"caption\">"
-                                		+ "<h3>"+info.getDescription()+" "+info.getName()+"</h3>"
-                                		+ "<p> $"+ info.getPrice()+"</p>"
-                                		+ "<p><button class=\"btn btn-primary\" name=\"action\" value=\"addtocart\" type=\"submit\">add To Cart</button> <button class=\"btn btn-default\" name=\"action\" value=\"bid\" type=\"submit\">Bid</button</p>"
-                                		+ + "<input type=\"hidden\" name=\"id\" value=\"" + info.id + "\">"
-                                		 + " </div>"
-                                		 +  "</div>"
-                                		 + "</div>"
-                                		 + "</div>"
-                                		 + "</form>" ); */
-                                		    
-                                		      
-                                		       
-                                		        
-                                		        
-                                		     
-                                		   
-                                		
-                                		
+                           
                                  out.print(
                                         "<form method=\"post\">"
                                         + "<tr>"
                                         + "<td> <img src=" + "\"" + info.getImagepath() + "\"" + " style=\"width:140px;height:100px;\">"
                                         + "<td>" + info.getName() + "</td>"
-                                        + "<td>" + info.getDescription() + "</td>"
+                                      /*   + "<td>" + info.getDescription() + "</td>" */
                                         + "<td>" + info.getPrice() + "</td>"
                                         + "<td>" + info.getCategory() + "</td>"
+                                        + "<td> <input type=\"text\" class=\"form-control\" name=\"quantity\" value=\"" + info.getQuantity() + "\"></td>"
+                                       	+ "<td>" + info.getTotalprice() + "</td>"
                                         + "<input type=\"hidden\" name=\"iditem\" value=\"" + info.getIditem() + "\">"
-                                        + "<td> <button class=\"btn btn-success\" name=\"action\" value=\"addtocart\" type=\"submit\"><i class=\"icon-trash icon-white\"></i>Add To Cart</button></td>"
+                                        + "<input type=\"hidden\" name=\"idcartitem\" value=\"" + info.getCartid() + "\">"
+                                        + "<td> <button class=\"btn btn-danger\" name=\"action\" value=\"deletefromcart\" type=\"submit\">Delete from cart</button></td>"
+                                          + "<td> <button class=\"btn btn-default\" name=\"action\" value=\"updatecart\" type=\"submit\">Update Price</button></td>" 
                                         + "</tr>"
                                         + "</form>"); 
                             }
                         } catch (Exception e) {
+                        	System.err.println( e + " error exeption caught here!!!");
                         }
                     %>
                 </table>
+                <!-- <button type="submit"  name="action" value="updatecart" class="btn btn-default">Update Prices</button> -->
+                
             </form>
         </div>
         

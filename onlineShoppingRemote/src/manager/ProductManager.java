@@ -17,7 +17,7 @@ public class ProductManager {
     
 	    
 	    public List<Product> listAll() throws Exception {
-  List<Product> locationLst = new ArrayList<Product>();
+  List<Product> productlist = new ArrayList<Product>();
   String sql = "select * from items";
   ResultSet rs = this.db.getSQLResult(sql);
   while (rs.next()) {
@@ -28,8 +28,10 @@ public class ProductManager {
      info.setImagepath(rs.getString("imagepath")); 
      info.setName(rs.getString("name")); 
      info.setPrice(rs.getDouble("price"));
-     locationLst.add(info);
+     productlist.add(info);
   }
-  return locationLst;
+  return productlist;
 }
+	    
+	    
 }

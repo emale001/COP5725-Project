@@ -7,9 +7,12 @@ public class Product {
  private double price;
  private int category;
  private String imagepath;
+ private int quantity;
+ private double totalprice;
+ private int cartid;
  
  public Product () {
-	 
+	 this.totalprice = quantity * price;
  }
 
 public int getIditem() {
@@ -59,5 +62,29 @@ public int getCategory() {
 public void setCategory(int category) {
 	this.category = category;
 }
+
+public int getQuantity() {
+	return quantity;
+}
+
+public void setQuantity(int quantity) {
+	this.quantity = quantity;
+}
+
+
+
+public double getTotalprice() {
+	return this.quantity * this.price;
+}
+
+public int getCartid() {
+	return cartid;
+}
+
+public void setCartid(int cartid) {
+	this.cartid = cartid;
+}
+
+
  
 }
