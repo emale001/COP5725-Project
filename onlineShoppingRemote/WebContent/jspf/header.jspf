@@ -4,6 +4,7 @@
 
 <%@page import="manager.UserManager"%>
 <%@page import="entity.User"%>
+<%@page import="entity.Cart"%>
 
  <%
     // keep register/sign in messages(i.e. wrong email or password/ email has been userd.)
@@ -80,6 +81,7 @@
             session = request.getSession();
             session.removeAttribute("userid");
             session.removeAttribute("user");
+            session.removeAttribute("shoppingcart"); // last line of code added 11/24/14
             response.sendRedirect("index.jsp");
             return;
         }
@@ -131,8 +133,10 @@
                         try {
                             session = request.getSession();
                             int uid = Integer.parseInt(session.getAttribute("userid").toString());
+                            Cart cart = (Cart) session.getAttribute("shoppingcart");
                             UserManager mgnr = new UserManager();
                             User user = mgnr.getUsersById(uid);
+                            System.out.println(user +" "+ cart);
                             if (user != null) {
                                 int role = user.role;
                                 String link = "#";
@@ -142,11 +146,16 @@
                                         break;
                               
                                 }
-                                out.print("<li><a href='" + link + "' class='small_font'>welcome, " + user.email + "</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='signout();'>sign out</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='myBids();'>My Bids</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
+                                out.print("<li><a href='" + link + "' class='small_font'>welcome, " + user.email + "</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='signout();'>sign out</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='myBids();'>My Bids</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"#\" class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
                                
-                            } else {
+                            }  else {
+                            	/* System.out.println(user +" "+ cart);
+                            	
+                            	if (cart != null ){
+                            		out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='' class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
+                            	} */
                                 out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a></li>");
-                            }
+                            } 
                         } catch (Exception ex) {
                             out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a></li>");
                         }

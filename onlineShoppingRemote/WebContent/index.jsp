@@ -7,6 +7,8 @@
 <%@page import="Entity.ReservationInfo"%> --%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="entity.Product"%> 
+<%@page import= "manager.ProductManager"%>
 <%-- <%
     String warningMsg = "";
     try {
@@ -152,17 +154,18 @@
         }
         $("#reserve_form").submit();
     } -->
-</script>
+
 <!--main content-->
 <div class="container">
 <div class="row" >
-<jsp:include page="jspf/control_panel.jsp">
-            <jsp:param name="menuItems" value="Manage car,Manage employee" />  
-            <jsp:param name="menuLinks" value="manage_car.jsp,manage_employee.jsp" />  
-</jsp:include>
+
  </div>
  </div>
-   </form>
+ <div class="container-fluid">
+ <div class="row">
+ <div class="col-lg-3 col-sm-6">
+            <table>
+   <form>
            <!--  <div class="span9" style="margin-top: 30px">
                 <form class="form-search" id="search_form">
                     <div class="control-group">
@@ -174,6 +177,103 @@
                     </div>
                 </form>
             </div> -->
+             <%
+                        try {
+                            String action = request.getParameter("action");
+                            ProductManager mngr = new ProductManager();
+                          //  CartManager cmgr = new CartManager();
+                            List<Product> productlist = null;
+                           
+                            Product info = null;
+                            System.out.println(action);
+                            session = request.getSession();
+                            User user = (User) session.getAttribute("user");
+                            if (action == null) {
+
+                                productlist = mngr.listAll();
+                            } 
+                           /*  else if (action.compareTo("addtocart") == 0) {
+                            	if (user != null) {
+                            		 System.out.println(action);
+                            		int iditem = Integer.parseInt(request.getParameter("iditem"));
+                            	 int exist = cmgr.insertInCart(iditem, user);
+                            	 if (exist != -1){
+                            	 out.println(action+ ": item has been added to your cart");
+                            	 productlist = mngr.listAll();
+                            	 }
+                            	 else {
+                            		 out.println(action+ ": item is already in your cart");
+                            		 productlist = mngr.listAll();
+                            	 }
+                            	}
+                            	else {
+                            	
+                                int iditem = Integer.parseInt(request.getParameter("iditem"));
+                              
+                              productlist = mngr.listAll();
+                                response.sendRedirect("view_products.jsp");
+                            	}
+                            }  */
+                            Iterator<Product> itr2 = productlist.iterator();
+                            while (itr2.hasNext()) {
+                                info = itr2.next();
+                                
+                                 out.print(
+                                		"<form method=\"post\">"
+                                		+"<div class=\"row\">"
+                                		+ "<div class=\"col-sm-6 col-md-4\">"
+                                		+ " <div class=\"thumbnail\">"
+                                		+ "<img src=\"" +info.getImagepath()+"\" alt=\"...\">"
+                                		+ "<div class=\"caption\">"
+                                		+ "<h3>"+info.getDescription()+" "+info.getName()+"</h3>"
+                                		+ "<p> $"+ info.getPrice()+"</p>"
+                                		+ "<p><button class=\"btn btn-primary\" name=\"action\" value=\"addtocart\" type=\"submit\">add To Cart</button> <button class=\"btn btn-default\" name=\"action\" value=\"bid\" type=\"submit\">Bid</button</p>"
+                                		+  "<input type=\"hidden\" name=\"id\" value=\"" + info.getIditem() + "\">"
+                                		 + " </div>"
+                                		 +  "</div>"
+                                		 + "</div>"
+                                		 + "</div>"
+                                		 + "</form>" ); 
+                                		    
+                                		      
+                                		       
+                                		        
+                                		        
+                                		     
+                                		   
+                                		
+                                		
+                                 /* out.print(
+                                        "<form method=\"post\">"
+                                        + "<tr>"
+                                        + "<td> <img src=" + "\"" + info.getImagepath() + "\"" + " style=\"width:140px;height:100px;\">"
+                                        + "<td>" + info.getName() + "</td>"
+                                        + "<td>" + info.getDescription() + "</td>"
+                                        + "<td>" + info.getPrice() + "</td>"
+                                        + "<td>" + info.getCategory() + "</td>"
+                                        + "<input type=\"hidden\" name=\"iditem\" value=\"" + info.getIditem() + "\">"
+                                        + "<td> <button class=\"btn btn-success\" name=\"action\" value=\"addtocart\" type=\"submit\"><i class=\"icon-trash icon-white\"></i>Add To Cart</button></td>"
+                                        + "</tr>"
+                                        + "</form>");  */
+                            }
+                        } catch (Exception e) {
+                        }
+                    %>
+            
+            </form>
+            </table>
+        </div>
+ 
+ </div>
+ 
+ </div>
+ 
+ 
+ 
+            
+            
+            
+            
             <form method="post">
                 <table class="table table-hover" style="margin-left: 10px">
                   <!--   <tr>

@@ -94,8 +94,19 @@
                             User user = (User) session.getAttribute("user");
                             if (action == null) {
                             	System.out.println(action+user.email+"displaying cart first time");
-                                productlist = cmgr.getUserShoppingCart(user);
-                            } 
+                            	if (user != null) {
+                           		 System.out.println(action);
+                           		//int iditem = Integer.parseInt(request.getParameter("iditem"));
+                           
+                           	 productlist = cmgr.getUserShoppingCart(user);
+                           	 
+                            	}
+                           	  	productlist = cmgr.getUserShoppingCart(user);
+                           	 
+                           	}
+                            	
+                                //productlist = cmgr.getUserShoppingCart(user);
+                            
                              else if (action.equals("deletefromcart")) {
                             	if (user != null) {
                             		 System.out.println(action);
@@ -130,6 +141,7 @@
                             	}
                              
                             Iterator<Product> itr = productlist.iterator();
+                            double checkoutprice = 0;
                             while (itr.hasNext()) {
                                 info = itr.next();
                                 
@@ -140,24 +152,28 @@
                                         + "<td> <img src=" + "\"" + info.getImagepath() + "\"" + " style=\"width:140px;height:100px;\">"
                                         + "<td>" + info.getName() + "</td>"
                                       /*   + "<td>" + info.getDescription() + "</td>" */
-                                        + "<td>" + info.getPrice() + "</td>"
+                                        + "<td>$" + info.getPrice() + "</td>"
                                         + "<td>" + info.getCategory() + "</td>"
                                         + "<td> <input type=\"text\" class=\"form-control\" name=\"quantity\" value=\"" + info.getQuantity() + "\"></td>"
-                                       	+ "<td>" + info.getTotalprice() + "</td>"
+                                       	+ "<td>$" + info.getTotalprice() + "</td>"
                                         + "<input type=\"hidden\" name=\"iditem\" value=\"" + info.getIditem() + "\">"
                                         + "<input type=\"hidden\" name=\"idcartitem\" value=\"" + info.getCartid() + "\">"
                                         + "<td> <button class=\"btn btn-danger\" name=\"action\" value=\"deletefromcart\" type=\"submit\">Delete from cart</button></td>"
                                           + "<td> <button class=\"btn btn-default\" name=\"action\" value=\"updatecart\" type=\"submit\">Update Price</button></td>" 
                                         + "</tr>"
                                         + "</form>"); 
+                                 
+                                 checkoutprice += info.getTotalprice();
                             }
+                            out.println("<tr> <td> <p><h4>Check out price: </p> $"+ checkoutprice +"</h4> </td></tr> <tr> <td> <button class=\"btn btn-primary\" name=\"action\" value=\"checkout\" type=\"submit\">Check Out</button></td> </tr>");
+                           
                         } catch (Exception e) {
                         	System.err.println( e + " error exeption caught here!!!");
                         }
                     %>
                 </table>
                 <!-- <button type="submit"  name="action" value="updatecart" class="btn btn-default">Update Prices</button> -->
-                
+                <%-- <label name="checkoutprice" value="$<%=checkoutprice %>"> </label> --%>
             </form>
         </div>
         

@@ -25,6 +25,7 @@
 <%@page import="java.util.List"%>
 
 <%@page import="entity.Product"%> 
+<%@page import="entity.Cart"%> 
 <%@page import= "manager.ProductManager"%>
 <%@page import= "manager.CartManager"%>
 <%@page import="java.util.Iterator"%>
@@ -84,18 +85,22 @@
                             ProductManager mngr = new ProductManager();
                             CartManager cmgr = new CartManager();
                             List<Product> productlist = null;
-                           
+                        	//Cart cart = null;
                             Product info = null;
                             System.out.println(action);
                             session = request.getSession();
                             User user = (User) session.getAttribute("user");
+                            Cart cart = (Cart) session.getAttribute("shoppingcart");
+                           
+                      
                             if (action == null) {
 
                                 productlist = mngr.listAll();
                             } 
                             else if (action.compareTo("addtocart") == 0) {
+                            	String msg = "";
                             	if (user != null) {
-                            		 System.out.println(action);
+                            		 System.out.println(action+ user + "user != null");
                             		int iditem = Integer.parseInt(request.getParameter("iditem"));
                             	 int exist = cmgr.insertInCart(iditem, user);
                             	 if (exist != -1){
@@ -108,11 +113,27 @@
                             	 }
                             	}
                             	else {
-                            	
-                                int iditem = Integer.parseInt(request.getParameter("iditem"));
+                            
+                            		if (cart == null ){
+                            			cart = new Cart();
+                            		}
+                            		
+                            	int iditem = Integer.parseInt(request.getParameter("iditem"));
+                            	if (!cart.contains(iditem)) {
+                            		cart.addItem(iditem);
+                            		msg = " : item has been added to your cart";
+                            		//session = request.getSession();
+                                    session.setAttribute("shoppingcart", cart);
+                                    
+                            	}
+                            	else {
+                            		msg = ": Item is already in your cart";
+                            	}
+                            	//System.out.println(action + cart + "user is null");
+                            	out.println(action+ msg);
                               
-                              productlist = mngr.listAll();
-                                response.sendRedirect("view_products.jsp");
+                             	productlist = mngr.listAll();
+                                //response.sendRedirect("view_products.jsp");
                             	}
                             } 
                             Iterator<Product> itr2 = productlist.iterator();
@@ -158,6 +179,7 @@
                                         + "</form>"); 
                             }
                         } catch (Exception e) {
+                        	System.err.println(e +"");
                         }
                     %>
                 </table>

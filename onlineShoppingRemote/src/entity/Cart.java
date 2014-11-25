@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Cart {
 
 	private User user;
-	private ArrayList<Product> list;
+	private ArrayList<Integer> listofitemids;
 	
 	public Cart() {
-		list = new ArrayList<Product>();
+		listofitemids = new ArrayList<Integer>();
 	}
 	public User getUser() {
 		return user;
@@ -16,15 +16,19 @@ public class Cart {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public ArrayList<Product> getList() {
-		return list;
+	public ArrayList<Integer> getList() {
+		return listofitemids;
 	}
-	public void setList(ArrayList<Product> list) {
-		this.list = list;
+	public void setList(ArrayList<Integer> list) {
+		this.listofitemids = list;
 	}
 	
-	public void addItem (Product item){
-		this.list.add(item);
+	public void addItem (Integer item){
+		this.listofitemids.add(item);
+	}
+	
+	public boolean contains (Integer item) {
+		return this.listofitemids.contains(item);
 	}
 	
 }
