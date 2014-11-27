@@ -13,7 +13,7 @@
         // action indicates whether it's register or sign in or sign out
         String action = request.getParameter("user_action");
         String actionshopping = request.getParameter("user_action_shopping");
-		//System.out.println(action +" "+ actionshopping);
+		System.out.println(action +" "+ actionshopping);
         // handle register
         if (action.compareTo("register") == 0) {
             String email = request.getParameter("email");
@@ -132,11 +132,24 @@
                      <%
                         try {
                             session = request.getSession();
-                            int uid = Integer.parseInt(session.getAttribute("userid").toString());
-                            Cart cart = (Cart) session.getAttribute("shoppingcart");
+                            System.out.println("line 134 executed ");
+                           // int uid = (Integer) session.getAttribute("userid");
+                          /* User user = null; */
+                          	Cart cart = (Cart) session.getAttribute("shoppingcart");
+                           
+                            //user = (User) session.getAttribute("user");
+                            
+                          
+                            User user = (User) session.getAttribute("user"); 
+                            System.out.println("line 136 executed ");
+                        //  Cart cart = (Cart) session.getAttribute("shoppingcart");
+                            System.out.println("line 138 executed ");
                             UserManager mgnr = new UserManager();
-                            User user = mgnr.getUsersById(uid);
+                            System.out.println("line 140 executed ");
+                           // user = mgnr.getUsersById(user.userid);
+                            System.out.println("line 142 executed ");
                             System.out.println(user +" "+ cart);
+                            
                             if (user != null) {
                                 int role = user.role;
                                 String link = "#";
@@ -149,15 +162,24 @@
                                 out.print("<li><a href='" + link + "' class='small_font'>welcome, " + user.email + "</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='signout();'>sign out</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='myBids();'>My Bids</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"#\" class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
                                
                             }  else {
-                            	/* System.out.println(user +" "+ cart);
+                            	 System.out.println(user +" header.jsp  "+ cart);
                             	
-                            	if (cart != null ){
-                            		out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='' class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
-                            	} */
-                                out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a></li>");
-                            } 
+                            	// if (!cart.getListIds().isEmpty() || cart != null ){
+                            		// System.out.println(user +" header.jsp cart is not empty  "+ cart);
+                            		// out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a></li>");
+                            		 out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a>&nbsp;&nbsp;<a href=\"#\" class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
+                            	}  
+                            	 
+                            	// out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a>&nbsp;&nbsp;<a href=\"#\" class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
+                            //	else out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a></li>");
+                              
+                            	// out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"#\" class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
+                            	
+                            
                         } catch (Exception ex) {
+                        	System.out.println(ex +" header.jspf exception");
                             out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a></li>");
+                            //out.print("<li><a href=\"#\" class=\"small_font\" onclick=\"$('#regiister_panel').modal('show');\">register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"#\" class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
                         }
                     %> 
                     <input id="signout_flag" type="hidden" value="signout" name="user_action"/>

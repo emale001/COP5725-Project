@@ -18,16 +18,17 @@ public class ProductManager {
 	    
 	    public List<Product> listAll() throws Exception {
   List<Product> productlist = new ArrayList<Product>();
-  String sql = "select * from items";
+  String sql = "select iditems, name, description, price, Category.cname, imagepath from items , Category Where items.category = Category.idCategory";
   ResultSet rs = this.db.getSQLResult(sql);
   while (rs.next()) {
      Product info = new Product();
       info.setIditem(rs.getInt("iditems"));
-     info.setCategory(rs.getInt("category")); 
+    // info.setCategoryId(rs.getInt("category")); 
      info.setDescription(rs.getString("description")); 
      info.setImagepath(rs.getString("imagepath")); 
      info.setName(rs.getString("name")); 
      info.setPrice(rs.getDouble("price"));
+     info.setCategory(rs.getString("cname")); 
      productlist.add(info);
   }
   return productlist;

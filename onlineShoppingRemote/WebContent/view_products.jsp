@@ -84,19 +84,28 @@
                             String action = request.getParameter("action");
                             ProductManager mngr = new ProductManager();
                             CartManager cmgr = new CartManager();
-                            List<Product> productlist = null;
-                        	//Cart cart = null;
+                           	List<Product> productlist = null;
+                        	Cart cart = null;
                             Product info = null;
                             System.out.println(action);
                             session = request.getSession();
                             User user = (User) session.getAttribute("user");
-                            Cart cart = (Cart) session.getAttribute("shoppingcart");
+                            cart = (Cart) session.getAttribute("shoppingcart");
+                           
                            
                       
                             if (action == null) {
+                            	if (user != null) {
 
                                 productlist = mngr.listAll();
-                            } 
+                            	}
+                            	else {
+                            		 productlist = mngr.listAll();
+                            		// session.removeAttribute("shoppingcart");
+                            		// cart.getListIds().clear();
+                            		// cart.getListOfItems().clear();
+                            	}	
+                        	} 
                             else if (action.compareTo("addtocart") == 0) {
                             	String msg = "";
                             	if (user != null) {
@@ -116,13 +125,36 @@
                             
                             		if (cart == null ){
                             			cart = new Cart();
+                            			System.out.println("cart is null");
                             		}
                             		
                             	int iditem = Integer.parseInt(request.getParameter("iditem"));
-                            	if (!cart.contains(iditem)) {
+                            	/* String name, description, imagepath;
+                            	int category */
+                            	String name, description, imagepath, category;
+                            	int idcategory = Integer.parseInt(request.getParameter("idcategory"));
+                            	//int quantity = Integer.parseInt(request.getParameter("quantity"));
+                            	int quantity = 1;
+                            	int cartid = Integer.parseInt(request.getParameter("cartid"));
+                            	 int index = Integer.parseInt(request.getParameter("index")); //just added 11/27/14
+                            	double price = Double.parseDouble(request.getParameter("price"));
+                            	double totalprice = Double.parseDouble(request.getParameter("totalprice"));
+                            	name = request.getParameter("name").toString();
+                            	description = request.getParameter("description").toString();
+                            	imagepath = request.getParameter("imagepath").toString();
+                            	category = request.getParameter("category").toString();
+                            	Product item = new Product (iditem, name, description, price, idcategory, imagepath, quantity, cartid, category);
+                            	
+                            	if (/*!cart.contains(iditem) && */ !cart.contains(item)) {
+                            		
+                                	
+                            		//System.out.println("info" + session.getAttribute("item").toString());
                             		cart.addItem(iditem);
+                            		cart.addItem(item);
+                            		//cart.getListIds().add(index, iditem);
+                            		//cart.getListOfItems().add(index, item);
                             		msg = " : item has been added to your cart";
-                            		//session = request.getSession();
+                            		session = request.getSession();
                                     session.setAttribute("shoppingcart", cart);
                                     
                             	}
@@ -137,6 +169,7 @@
                             	}
                             } 
                             Iterator<Product> itr2 = productlist.iterator();
+                            int index = 0;
                             while (itr2.hasNext()) {
                                 info = itr2.next();
                                 
@@ -174,17 +207,36 @@
                                         + "<td>" + info.getPrice() + "</td>"
                                         + "<td>" + info.getCategory() + "</td>"
                                         + "<input type=\"hidden\" name=\"iditem\" value=\"" + info.getIditem() + "\">"
+                                         + "<input type=\"hidden\" name=\"name\" value=\"" + info.getName() + "\">"
+                                         + "<input type=\"hidden\" name=\"description\" value=\"" + info.getDescription() + "\">"
+                                         + "<input type=\"hidden\" name=\"price\" value=\"" + info.getPrice() + "\">"
+                                        + "<input type=\"hidden\" name=\"idcategory\" value=\"" + info.getCategoryId() + "\">"
+                                        + "<input type=\"hidden\" name=\"imagepath\" value=\"" + info.getImagepath() + "\">"
+                                        + "<input type=\"hidden\" name=\"totalprice\" value=\"" + info.getTotalprice() + "\">"
+                                        + "<input type=\"hidden\" name=\"quantity\" value=\"" + info.getQuantity() + "\">"
+                                        + "<input type=\"hidden\" name=\"cartid\" value=\"" + info.getCartid() + "\">"
+                                        + "<input type=\"hidden\" name=\"index\" value=\"" + index + "\">"
+                                        + "<input type=\"hidden\" name=\"category\" value=\"" + info.getCategory() + "\">"
                                         + "<td> <button class=\"btn btn-success\" name=\"action\" value=\"addtocart\" type=\"submit\"><i class=\"icon-trash icon-white\"></i>Add To Cart</button></td>"
                                         + "</tr>"
                                         + "</form>"); 
+                                		 
+                                		 
+                                		// request.setAttribute("item", info); 
+                                		 index++;
                             }
                         } catch (Exception e) {
-                        	System.err.println(e +"");
+                        	System.err.println(e +" after while view_products.jsp");
                         }
                     %>
                 </table>
             </form>
         </div>
+        
+        
+      
+	
+         
         
         
       <!--   <div class="row">

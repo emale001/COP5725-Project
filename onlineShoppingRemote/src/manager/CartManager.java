@@ -24,24 +24,48 @@ public class CartManager {
     public List<Product> getUserShoppingCart(User user) throws Exception {
 //    	Cart cart = null;
     	List<Product> shoppingcart = new ArrayList<Product>();
-    	String sql = "select idcartitems, cartitems.iditems, name, description, price, category, imagepath, quantity"
-    			+ " from cartitems , items  where cartitems.iditems = items.idItems AND cartitems.idusers =" + user.userid ;
+    	String sql = "select idcartitems, cartitems.iditems, name, description, price, Category.cname, imagepath, quantity"
+    			+ " from cartitems , items, Category  where cartitems.iditems = items.idItems AND items.category = Category.idCategory"
+    			+ " AND cartitems.idusers =" + user.userid ;
     	ResultSet rs = this.db.getSQLResult(sql);
     	while (rs.next()) {
     		Product info = new Product();
     		
     		info.setIditem(rs.getInt("iditems"));
-    		info.setCategory(rs.getInt("category")); 
+    		//info.setCategoryId(rs.getInt("category")); 
     		info.setDescription(rs.getString("description")); 
     		info.setImagepath(rs.getString("imagepath")); 
     		info.setName(rs.getString("name")); 
     		info.setPrice(rs.getDouble("price"));
     		info.setQuantity(Integer.parseInt(rs.getString("quantity")));
     		info.setCartid(rs.getInt("idcartitems"));
+    		info.setCategory(rs.getString("cname")); 
     		shoppingcart.add(info);
     		}
     		return shoppingcart;
 }
+    
+//    public List<Product> getUserShoppingCart(User user) throws Exception {
+////    	Cart cart = null;
+//    	List<Product> shoppingcart = new ArrayList<Product>();
+//    	String sql = "select idcartitems, cartitems.iditems, name, description, price, category, imagepath, quantity"
+//    			+ " from cartitems , items  where cartitems.iditems = items.idItems AND cartitems.idusers =" + user.userid ;
+//    	ResultSet rs = this.db.getSQLResult(sql);
+//    	while (rs.next()) {
+//    		Product info = new Product();
+//    		
+//    		info.setIditem(rs.getInt("iditems"));
+//    		info.setCategory(rs.getInt("category")); 
+//    		info.setDescription(rs.getString("description")); 
+//    		info.setImagepath(rs.getString("imagepath")); 
+//    		info.setName(rs.getString("name")); 
+//    		info.setPrice(rs.getDouble("price"));
+//    		info.setQuantity(Integer.parseInt(rs.getString("quantity")));
+//    		info.setCartid(rs.getInt("idcartitems"));
+//    		shoppingcart.add(info);
+//    		}
+//    		return shoppingcart;
+//}
     
     
     public int insertInCart(int iditem, User user) throws Exception {

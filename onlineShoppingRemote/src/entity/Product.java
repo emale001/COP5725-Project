@@ -5,15 +5,29 @@ public class Product {
  private String name;
  private String description;
  private double price;
- private int category;
+ private int idcategory;
  private String imagepath;
  private int quantity;
  private double totalprice;
  private int cartid;
+ private String category;
+ 
+ public Product (int id, String name, String description, double price, int idcategory, String imagepath, int quantity, int cartid, String category) {
+	 this.totalprice = quantity * price;
+	 this.name = name;
+	 this.description = description;
+	 this.price = price;
+	 this.idcategory = idcategory;
+	 this.imagepath = imagepath;
+	 this.quantity = quantity;
+	 this.cartid = cartid;
+	 this.iditem = id;
+	 this.setCategory(category);
+ }
  
  public Product () {
-	 this.totalprice = quantity * price;
  }
+ 
 
 public int getIditem() {
 	return iditem;
@@ -55,12 +69,12 @@ public void setImagepath(String imagepath) {
 	this.imagepath = imagepath;
 }
 
-public int getCategory() {
-	return category;
+public int getCategoryId() {
+	return idcategory;
 }
 
-public void setCategory(int category) {
-	this.category = category;
+public void setCategoryId(int idcategory) {
+	this.idcategory = idcategory;
 }
 
 public int getQuantity() {
@@ -83,6 +97,23 @@ public int getCartid() {
 
 public void setCartid(int cartid) {
 	this.cartid = cartid;
+}
+
+public boolean equals (Object obj) {
+	
+	if (obj instanceof Product) {
+		Product item = (Product) obj;
+		return this.getIditem() == item.getIditem();
+	}
+	return false;
+}
+
+public String getCategory() {
+	return category;
+}
+
+public void setCategory(String category) {
+	this.category = category;
 }
 
 
