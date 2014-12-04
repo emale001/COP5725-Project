@@ -402,4 +402,14 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $("#index_tab").removeClass("red_underscore");
+        $("#product_tab").addClass("red_underscore");
+    });
+</script>
+
+
+
+
 <%@include file="jspf/footer.jspf" %>

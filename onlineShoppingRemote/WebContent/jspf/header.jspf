@@ -52,13 +52,15 @@
                     Encryptor encryptor = new Encryptor();
                     password = encryptor.getMD5Str(password);
                     
-                    User user;
+                    User user = new User();
+                    //User user;
                     UserManager mgnr = new UserManager();
                     // encrypt password
                     //byte[] bytesOfMessage = password.getBytes("UTF-8");
                     //MessageDigest md = MessageDigest.getInstance("MD5");
                     //password = md.digest(bytesOfMessage).toString();
                     user = mgnr.getUser(email, password);
+                    user.password = password;
                     // if successfully signed in, set session
                     if (user != null) {
                         session = request.getSession();
@@ -82,18 +84,30 @@
         	String firstname= request.getParameter("firstname");
         	String lastname = request.getParameter("lastname");
         	String email = request.getParameter("email");
-        	String password = request.getParameter("password");
-        	 Encryptor encryptor = new Encryptor();
-             password = encryptor.getMD5Str(password);
+        	String newpassword = request.getParameter("newpassword");
+        	String oldpassword = request.getParameter("oldpassword");
+        	Encryptor encryptor = new Encryptor();
+            String encryptedpassold = encryptor.getMD5Str(oldpassword);
+            String encryptedpassnew = encryptor.getMD5Str(newpassword);
              
              
              UserManager mgnr = new UserManager();
              User user = (User) session.getAttribute("user"); 
-             user.email = email;
-             user.firstname = firstname;
-             user.lastname = lastname;
-             user.password = password;
-           	mgnr.updateUser(user);
+             System.out.println(user.password);
+             
+           //  System.out.println(user.password);
+             if (user.password.equals(encryptedpassold)) {
+           		
+           		user.email = email;
+            	user.firstname = firstname;
+            	user.lastname = lastname;
+            	user.password = encryptedpassnew;
+            	System.out.println(user.password);
+        		mgnr.updateUser(user);
+             }
+             else {
+            	 
+             }
              
         	
         }
@@ -155,7 +169,7 @@
                      <%
                         try {
                             session = request.getSession();
-                            System.out.println("line 134 executed ");
+                          //  System.out.println("line 134 executed ");
                            // int uid = (Integer) session.getAttribute("userid");
                           /* User user = null; */
                           	Cart cart = (Cart) session.getAttribute("shoppingcart");
@@ -164,14 +178,14 @@
                             
                           
                             User user = (User) session.getAttribute("user"); 
-                            System.out.println("line 136 executed ");
+                          //  System.out.println("line 136 executed ");
                         //  Cart cart = (Cart) session.getAttribute("shoppingcart");
-                            System.out.println("line 138 executed ");
+                         //   System.out.println("line 138 executed ");
                             UserManager mgnr = new UserManager();
-                            System.out.println("line 140 executed ");
+                        //    System.out.println("line 140 executed ");
                            // user = mgnr.getUsersById(user.userid);
-                            System.out.println("line 142 executed ");
-                            System.out.println(user +" "+ cart);
+                        //    System.out.println("line 142 executed ");
+                        //    System.out.println(user +" "+ cart);
                             
                             if (user != null) {
                                 int role = user.role;
@@ -247,7 +261,7 @@
                         <li><a href="index.jsp" class="title_font">Team4Zone.com</a></li>
                         <li id="index_tab" class="red_underscore"><a href="index.jsp" class="mid_font">Home</a></li>
                           <li id="product_tab"><a href="view_products.jsp" class="mid_font">Products</a></li>
-                         <li id="product_tab"><a href="bid_products.jsp" class="mid_font">Bid Products</a></li>
+                         <li id="bidproduct_tab"><a href="bid_products.jsp" class="mid_font">Bid Products</a></li>
                         <!--<li><a href="#" class="mid_font">Car type</a></li>-->
                         <li id="about_us_tab"><a href="about_us.jsp" class="mid_font">About us</a></li>
                         <!-- <li id="about_us_tab"><a href="login.jsp" class="mid_font">Login</a></li> -->
@@ -324,8 +338,8 @@
                   <input id="signin_email" name="email" type="text" class="input-block-level validate[required,custom[email]]" placeholder="Email address" style='width:300px;'><br/>
                   
                   <!--   <input id="signin_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[3], maxSize[16]]" placeholder="oldPassword" style='width:300px;'><br/> -->
-                     <input id="old_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[3], maxSize[16]]" placeholder="oldPassword" style='width:300px;'><br/>
-                      <input id="new_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[3], maxSize[16]]" placeholder="newPassword" style='width:300px;'><br/>
+                     <input id="old_password" name="oldpassword" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[3], maxSize[16]]" placeholder="oldPassword" style='width:300px;'><br/>
+                      <input id="new_password" name="newpassword" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[3], maxSize[16]]" placeholder="newPassword" style='width:300px;'><br/>
                     <div class="control-group">
                         <div class="controls pull-right">
                             <button type="submit" class="btn btn-primary" onclick="">Update</button>

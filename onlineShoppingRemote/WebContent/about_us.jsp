@@ -31,9 +31,9 @@
             <th></th>
         <tr>
             <td><img src="img/chang.png" class="img-rounded" style="width:140px;height:140px;"></td>
-            <td>Chang</td>
+            <td>Edwin</td>
             <td>4012483</td>
-            <td>leader of the third deliverable</td>
+            <td>leader of the project</td>
             <td>mainly in charge of: UI design<br/> 
                 architecture design<br/>
                 database design<br/>
@@ -48,7 +48,7 @@
             <td>2929484</td>
             <td>leader of the second deliverable</td>
             <td>
-                responsible for implementing two web pages: manage_car.jsp and manage_employee.jsp,<br/>
+                responsible for implementing the following pages: about_us.jsp, view_product.jsp, shoppingCart.jsp, login, logout, edit user info<br/>
                 which enble administrator to manage the cars and employees.
             </td>
         </tr>
@@ -57,7 +57,7 @@
             <td>Name</td>
             <td>6644890</td>
             <td>leader of the user manual</td>
-            <td>responsible for implementing two web pages: select_cartype.jsp and reserve_car.jsp,<br/> 
+            <td>responsible for implementing the web pages: select_cartype.jsp and reserve_car.jsp,<br/> 
                 which are for the users reserving car's process. <br/>
             </td>
         </tr>
@@ -67,9 +67,9 @@
             <td>43245542</td>
             <td>leader for the first deliverable</td>
             <td>
-                Group leader for the first deliverable.<br/>
-                Use Case Diagram,Sequence Diagram,State Chart Diagram<br/>
-                Coding: Edit User Information,Edit Reservation Pages</td>
+               n/a.<br/>
+                n/a<br/>
+                n/a</td>
         </tr>
         <tr>
             <td><img src="img/wenrui.jpg" class="img-rounded" style="width:140px;height:140px;"></td>
