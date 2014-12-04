@@ -229,6 +229,7 @@
                                 		+ "<p> $"+ info.getPrice()+"</p>"
                                 		+ "<p><button class=\"btn btn-primary\" name=\"action\" value=\"addtocart\" type=\"submit\">add To Cart</button> <button class=\"btn btn-default\" name=\"action\" value=\"bid\" type=\"submit\">Bid</button</p>"
                                 		+  "<input type=\"hidden\" name=\"id\" value=\"" + info.getIditem() + "\">"
+                                		+  "<input type=\"hidden\" name=\"description\" value=\"" + info.getDescription() + "\">"
                                 		 + " </div>"
                                 		 +  "</div>"
                                 		 + "</div>"

@@ -141,8 +141,8 @@ public class UserManager {
     public void updateUser(User info) throws SQLException {
 
         try {
-            String sql = "UPDATE users SET  first_name = '" + info.firstname + "', last_name = '"
-                    + info.lastname +  "' WHERE idusers =" + info.userid;
+            String sql = "UPDATE users SET  firstname = '" + info.firstname + "', lastname = '"
+                    + info.lastname +  "', password = '"+ info.password+ "', email ='"+info.email+"' WHERE idusers =" + info.userid;
 
             this.db.executeSQL(sql);
         } catch (SQLException ex) {

@@ -77,7 +77,30 @@
                 }
             }
             // handle sign out
-        } else if (action.compareTo("signout") == 0) {
+        } 
+        else if (action.equals("edituser")){
+        	String firstname= request.getParameter("firstname");
+        	String lastname = request.getParameter("lastname");
+        	String email = request.getParameter("email");
+        	String password = request.getParameter("password");
+        	 Encryptor encryptor = new Encryptor();
+             password = encryptor.getMD5Str(password);
+             
+             
+             UserManager mgnr = new UserManager();
+             User user = (User) session.getAttribute("user"); 
+             user.email = email;
+             user.firstname = firstname;
+             user.lastname = lastname;
+             user.password = password;
+           	mgnr.updateUser(user);
+             
+        	
+        }
+        
+        
+        
+        else if (action.compareTo("signout") == 0) {
             session = request.getSession();
             session.removeAttribute("userid");
             session.removeAttribute("user");
@@ -153,13 +176,14 @@
                             if (user != null) {
                                 int role = user.role;
                                 String link = "#";
+                             /*   String link = ""; */
                                 switch (role) {
                                         case 1:
-                                        link = "edit_user.jsp";
+                                      //  link = "edit_user.jsp";
                                         break;
                               
                                 }
-                                out.print("<li><a href='" + link + "' class='small_font'>welcome, " + user.email + "</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='signout();'>sign out</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='myBids();'>My Bids</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"#\" class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
+                                out.print("<li><a href=\"" + link +"\" class=\"small_font\" onclick=\"$('#edituser_panel').modal('show');\">welcome, " + user.email + "</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='signout();'>sign out</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='myBids();'>My Bids</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"#\" class='small_font' onclick='shoppingCart();'> Shopping Cart</a></li>");
                                
                             }  else {
                             	 System.out.println(user +" header.jsp  "+ cart);
@@ -282,6 +306,39 @@
                 </form>
             </div>
         </div>
+        
+         <!--edit user panel-->
+        <div id="edituser_panel" class="modal hide fade" style="border:0px; width:520px; padding-bottom:20px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Edit information</h3>
+            </div>
+            <div id=""style='margin:0px 20px 0px 20px;'>
+                <form id="user_edituser_form" method="post">
+                    <a href="#" onclick='$("#edituser_panel").modal("hide");
+                            $("#regiister_panel").modal("show");' style="float:right;"></a>
+                    <h4 class="form-style-heading mid_font">Edit your information here</h4>
+                    <input id="signin_email" name="firstname" type="text" class="input-block-level validate[required]" placeholder="First Name" style='width:300px;'><br/>
+                  	<input id="signin_email" name="lastname" type="text" class="input-block-level validate[required]" placeholder="Last Name" style='width:300px;'><br/>
+                 <!--  <input id="signin_email" name="email" type="text" class="input-block-level validate[required,custom[email]]" placeholder="Email address" style='width:300px;'><br/> -->
+                  <input id="signin_email" name="email" type="text" class="input-block-level validate[required,custom[email]]" placeholder="Email address" style='width:300px;'><br/>
+                  
+                  <!--   <input id="signin_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[3], maxSize[16]]" placeholder="oldPassword" style='width:300px;'><br/> -->
+                     <input id="old_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[3], maxSize[16]]" placeholder="oldPassword" style='width:300px;'><br/>
+                      <input id="new_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[3], maxSize[16]]" placeholder="newPassword" style='width:300px;'><br/>
+                    <div class="control-group">
+                        <div class="controls pull-right">
+                            <button type="submit" class="btn btn-primary" onclick="">Update</button>
+                        </div>
+                    </div>
+                    <!--save some information needed to post to the server-->
+                    <input id='edituser_flag' type="hidden" value="edituser" name="user_action"></input>
+                </form>
+            </div>
+        </div>
+        
+        
+        
       <!--  <form class="form-inline" role="form">
   <div class="form-group">
     <div class="input-group">
@@ -434,6 +491,12 @@
                                         autoHidePrompt: true
                                     });
                             $("#user_signin_form").validationEngine('attach',
+                                    {
+                                        promptPosition: "topLeft",
+                                        scroll: false,
+                                        autoHidePrompt: true
+                                    });
+                            $("#user_edituser_form").validationEngine('attach',
                                     {
                                         promptPosition: "topLeft",
                                         scroll: false,
