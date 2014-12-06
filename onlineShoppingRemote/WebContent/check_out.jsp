@@ -34,7 +34,7 @@
 
 
 <!-- uncomment this script to unable credit card regex check -->
- <script>
+ <!-- <script>
     // init the datetimepicker and validationEngine
     $(document).ready(function() {
 
@@ -50,7 +50,7 @@
 
 
 </script>  
-
+ -->
 
 <div>
 	<div>
@@ -70,6 +70,10 @@
 						
 					} 
 					
+				}
+				
+				else if (action.equals("buynow")){
+					checkoutprice = request.getParameter("checkoutprice");
 				}
 				
 				

@@ -1,14 +1,11 @@
-<%-- 
-    Document   : index
-    Created on : Oct 23, 2013, 9:59:02 PM
-    Author     : changliu
---%>
+
 <%-- <%@page import="Manager.ReservationManager"%>
 <%@page import="Entity.ReservationInfo"%> --%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="entity.Product"%> 
 <%@page import= "manager.ProductManager"%>
+<%@page import="javax.servlet.http.*"%>
 <%-- <%
     String warningMsg = "";
     try {
@@ -165,7 +162,7 @@
  <div class="row">
  <div class="row" class="col-md-12" style= margin-left:80px>
             <table>
-   <form>
+   <!-- <form action="#" method= "post"> -->
            <!--  <div class="span9" style="margin-top: 30px">
                 <form class="form-search" id="search_form">
                     <div class="control-group">
@@ -183,7 +180,7 @@
                             ProductManager mngr = new ProductManager();
                           //  CartManager cmgr = new CartManager();
                             List<Product> productlist = null;
-                           
+                           String url = "";
                             Product info = null;
                             System.out.println(action);
                             session = request.getSession();
@@ -192,6 +189,15 @@
 
                                 productlist = mngr.listAll();
                             } 
+                            
+                            else if (action.equals("buynow")) {
+                            	String checkoutprice = request.getParameter("checkoutprice");
+                            	session.setAttribute("checkoutprice", checkoutprice); 
+                            	
+                            	response.sendRedirect("check_out.jsp");
+                            	return;
+                            	
+                            }
                            /*  else if (action.compareTo("addtocart") == 0) {
                             	if (user != null) {
                             		 System.out.println(action);
@@ -215,11 +221,13 @@
                             	}
                             }  */
                             Iterator<Product> itr2 = productlist.iterator();
+                           /*  double checkoutprice = 0; */
                             while (itr2.hasNext()) {
                                 info = itr2.next();
-                                
+                             double checkoutprice = info.getPrice();
+                                //session.setAttribute("checkoutprice", checkoutprice); 
                                  out.print(
-                                		"<form method=\"post\">"
+                                		"<form id = \"buynow_form\" action=\"check_out.jsp\" method=\"post\">"
                                 		+"<div class=\"row\">"
                                 		+ "<div class=\"col-sm-6 col-md-4\">"
                                 		+ " <div class=\"thumbnail\">"
@@ -227,17 +235,31 @@
                                 		+ "<div class=\"caption\">"
                                 		+ "<h3>"+info.getDescription()+" "+info.getName()+"</h3>"
                                 		+ "<p> $"+ info.getPrice()+"</p>"
-                                		+ "<p><button class=\"btn btn-primary\" name=\"action\" value=\"buynow\" type=\"submit\">Buy now</button>"
+                                		
                                 		+  "<input type=\"hidden\" name=\"id\" value=\"" + info.getIditem() + "\">"
                                 		+  "<input type=\"hidden\" name=\"description\" value=\"" + info.getDescription() + "\">"
-                                		 + " </div>"
+                                				+  "<input type=\"hidden\" name=\"checkoutprice\" value=\"" + checkoutprice + "\">" //addded 12/6/14
+                                		
+                                				+ "<p><button class=\"btn btn-primary\" onclick='buynow();'name=\"action\" value=\"buynow\" type=\"submit\">Buy now</button>"	
+                                				
+                                			+ " </div>"
                                 		 +  "</div>"
                                 		 + "</div>"
                                 		 + "</div>"
-                                		 + "</form>" ); 
+                                		 /* checkoutprice = info.getPrice();
+                                		 session.setAttribute("checkoutprice", checkoutprice); */
+                                		 
+                                		 +"</form>"); 
+                               //  out.println("<form action=\"check_out.jsp\" method=\"post\"> <input type=\"hidden\" name=\"checkoutprice\" value=\"" + checkoutprice + "\"> </form>");
+                                		 
+ 										
+                                        
+                                		 
+                                		 
+                                		
                                 		    
                                 		      
-                                		       
+                              
                                 		        
                                 		        
                                 		     
@@ -257,11 +279,16 @@
                                         + "</tr>"
                                         + "</form>");  */
                             }
+                           
+                           
+                            
                         } catch (Exception e) {
                         }
+             
+             			
                     %>
             
-            </form>
+         <!--    </form> -->
             </table>
         </div>
  
@@ -361,5 +388,11 @@
         <p class="mid_font" style="top:20px;left:100px;position:relative;">make your journey joyful.</p>
     </div>
 </div>end main content -->
+<script>
+  function buynow()
+                        {
+                            $("#buynow_form").submit();
+                        }
+  </script>
 
 <%@include file="jspf/footer.jspf" %>
