@@ -183,6 +183,11 @@
                                // response.sendRedirect("view_products.jsp");
                             	}
                              }
+                            /*  else if (action.equals("checkout")){
+                            	 response.sendRedirect("check_out.jsp");
+                            	 return;
+                            	 
+                             } */
                             
                             if (productlist.size() == 0 || productlist == null) {
                             	String msg = "You currently has no Items in your Shopping Cart";
@@ -227,7 +232,7 @@
                                          
                                      +"</tr>" */
                                 		 
-                                		 
+                                	 	//"<form method=\"post\"" + 
                                        "<form method=\"post\">"
                                         + "<tr>"
                                         + "<td> <img src=" + "\"" + info.getImagepath() + "\"" + " style=\"width:140px;height:100px;\">"
@@ -258,9 +263,10 @@
                                  
                                  
                                  checkoutprice += info.getTotalprice();
+                                 session.setAttribute("checkoutprice", checkoutprice);
                                  index++;
                             }
-                            out.println("<tr> <td> <p><h4>Check out price: </p> $"+ checkoutprice +"</h4> </td></tr> <tr> <td> <button class=\"btn btn-primary\" name=\"action\" value=\"checkout\" type=\"submit\">Check Out</button></td> </tr>");
+                            out.println("<form action=\"check_out.jsp\" method=\"post\"> <tr> <td> <p><h4>Check out price: </p> $"+ checkoutprice +"</h4> </td></tr> <tr> <td> <button class=\"btn btn-primary\" name=\"action\" value=\"checkout\" type=\"submit\">Check Out</button></td> </tr> </form>");
                             }
                         
                         } catch (Exception e) {
