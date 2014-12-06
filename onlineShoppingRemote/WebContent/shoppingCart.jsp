@@ -17,8 +17,8 @@
     para: subTitle
 -->
 <jsp:include page="jspf/top_banner.jsp">
-    <jsp:param name="title" value="Products" />  
-    <jsp:param name="subTitle" value="We strive to provide the best service." />  
+    <jsp:param name="title" value="Shopping Cart" />  
+    <jsp:param name="subTitle" value="View your shopping cart: update or delete items from your cart" />  
 </jsp:include>
 
 <%@page import="java.util.Iterator"%>
@@ -35,7 +35,7 @@
 <%@page import="Entity.Product"%> --%>
 <script>
     // init the datetimepicker and validationEngine
-    $(document).ready(function() {
+   /*  $(document).ready(function() {
 
         $('#insertemployee_form').validationEngine('attach',
                 {
@@ -50,7 +50,7 @@
                     autoHidePrompt: true
                 });
 
-    });
+    }); */
 
 </script>
 <div class="container">

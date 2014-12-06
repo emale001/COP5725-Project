@@ -34,8 +34,7 @@
 
 
 <!-- uncomment this script to unable credit card regex check -->
-
-<!-- <script>
+ <script>
     // init the datetimepicker and validationEngine
     $(document).ready(function() {
 
@@ -50,12 +49,12 @@
 
 
 
-</script> -->
+</script>  
 
 
 <div>
 	<div>
-<form id="check_out_form" method="post">
+<form id="check_out_form" action="successful.jsp" method="post">
 <%
 		session = request.getSession();
 		String action = request.getParameter("action");
@@ -117,6 +116,10 @@
 			 			
 			 		
 			 		}
+			 		else {
+			 			response.sendRedirect("successful.jsp");
+			 		}
+			 		
 			 	}
 			    
 				}

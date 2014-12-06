@@ -30,7 +30,7 @@
             <th> Main tasks</th>
             <th></th>
         <tr>
-            <td><img src="img/chang.png" class="img-rounded" style="width:140px;height:140px;"></td>
+            <td><img src="" class="img-rounded" style="width:140px;height:140px;"></td>
             <td>Edwin</td>
             <td>4012483</td>
             <td>leader of the project</td>
@@ -43,7 +43,7 @@
             </td>
         </tr>
         <tr>
-            <td><img src="img/edwin.png" class="img-rounded" style="width:140px;height:140px;"></td>
+            <td><img src="" class="img-rounded" style="width:140px;height:140px;"></td>
             <td>Edwin</td>
             <td>2929484</td>
             <td>leader of the second deliverable</td>
@@ -53,7 +53,7 @@
             </td>
         </tr>
         <tr>
-            <td><img src="img/hiba.jpg" class="img-rounded" style="width:140px;height:140px;"></td>
+            <td><img src="" class="img-rounded" style="width:140px;height:140px;"></td>
             <td>Name</td>
             <td>6644890</td>
             <td>leader of the user manual</td>
@@ -62,7 +62,7 @@
             </td>
         </tr>
         <tr>
-            <td><img src="img/nahid.jpg" class="img-rounded" style="width:140px;height:140px;"></td>
+            <td><img src="" class="img-rounded" style="width:140px;height:140px;"></td>
             <td>Name</td>
             <td>43245542</td>
             <td>leader for the first deliverable</td>
@@ -72,7 +72,7 @@
                 n/a</td>
         </tr>
         <tr>
-            <td><img src="img/wenrui.jpg" class="img-rounded" style="width:140px;height:140px;"></td>
+            <td><img src="" class="img-rounded" style="width:140px;height:140px;"></td>
             <td>Name</td>
             <td>4672552</td>
             <td>leader of the test specification document</td>

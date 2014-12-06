@@ -163,7 +163,7 @@
  </div>
  <div class="container-fluid">
  <div class="row">
- <div class="col-lg-3 col-sm-6">
+ <div class="row" class="col-md-12" style= margin-left:80px>
             <table>
    <form>
            <!--  <div class="span9" style="margin-top: 30px">
@@ -227,7 +227,7 @@
                                 		+ "<div class=\"caption\">"
                                 		+ "<h3>"+info.getDescription()+" "+info.getName()+"</h3>"
                                 		+ "<p> $"+ info.getPrice()+"</p>"
-                                		+ "<p><button class=\"btn btn-primary\" name=\"action\" value=\"addtocart\" type=\"submit\">add To Cart</button> <button class=\"btn btn-default\" name=\"action\" value=\"bid\" type=\"submit\">Bid</button</p>"
+                                		+ "<p><button class=\"btn btn-primary\" name=\"action\" value=\"buynow\" type=\"submit\">Buy now</button>"
                                 		+  "<input type=\"hidden\" name=\"id\" value=\"" + info.getIditem() + "\">"
                                 		+  "<input type=\"hidden\" name=\"description\" value=\"" + info.getDescription() + "\">"
                                 		 + " </div>"
@@ -275,61 +275,7 @@
             
             
             
-            <form method="post">
-                <table class="table table-hover" style="margin-left: 10px">
-                  <!--   <tr>
-                        <th></th>
-                        <th> Make</th>
-                        <th> Model</th> 
-                        <th> Year </th>
-
-                        <th> VIN Number</th>
-                        <th> LocationId </th>
-                        <th></th>
-                    </tr> -->
-                  <%--   <%
-                        try {
-                            String action = request.getParameter("action");
-                            CarManager mngr = new CarManager();
-                            List<CarInfo> carList = null;
-                            CarInfo info = null;
-                            if (action == null) {
-
-                                carList = mngr.listAll();
-                            } else if (action.compareTo("searchbylocation") == 0) {
-                                String loc = request.getParameter("locId");
-                                if (loc.equals("all")) {
-                                    carList = mngr.listAll();
-                                } else {
-                                    carList = mngr.listByLocationId(Integer.parseInt(loc));
-                                }
-                            } else if (action.compareTo("deleterow") == 0) {
-                                String vin = request.getParameter("getvin");
-                                mngr.deleteCarByVin(vin);
-                                response.sendRedirect("manage_car.jsp");
-                            }
-                            Iterator<CarInfo> itr2 = carList.iterator();
-                            while (itr2.hasNext()) {
-                                info = itr2.next();
-                                out.print(
-                                        "<form method=\"post\">"
-                                        + "<tr>"
-                                        + "<td> <img src=" + "\"" + info.imgPath + "\"" + " style=\"width:140px;height:100px;\">"
-                                        + "<td>" + info.make + "</td>"
-                                        + "<td>" + info.model + "</td>"
-                                        + "<td>" + info.year + "</td>"
-                                        + "<td>" + info.vin + "</td>"
-                                        + "<td>" + info.locationId + "</td>"
-                                        + "<input type=\"hidden\" name=\"getvin\" value=\"" + info.vin + "\">"
-                                        + "<td> <button class=\"btn btn-danger\" name=\"action\" value=\"deleterow\" type=\"submit\"><i class=\"icon-trash icon-white\"></i>Delete</button></td>"
-                                        + "</tr>"
-                                        + "</form>");
-                            }
-                        } catch (Exception e) {
-                        }
-                    %> --%>
-                </table>
-            </form>
+           
     <!--reservation panel-->
    <%--  <div id="reserve_panel">
         <form id="reserve_form" method="post">
