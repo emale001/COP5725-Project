@@ -1,8 +1,4 @@
-<%-- 
-    Document   : about_us
-    Created on : Nov 13, 2013, 1:08:45 PM
-    Author     : changliu
---%>
+
 
 <%@include file="jspf/header.jspf" %>
 <div class="container" style="">
@@ -35,51 +31,42 @@
             <td>4012483</td>
             <td>leader of the project</td>
             <td>mainly in charge of: UI design<br/> 
-                architecture design<br/>
-                database design<br/>
+                
+                database connection<br/>
                 user register/sign in<br/>
                 security and privilege control.<br/>
                 project configuration management(Svn source control)
-            </td>
-        </tr>
-        <tr>
-            <td><img src="" class="img-rounded" style="width:140px;height:140px;"></td>
-            <td>Edwin</td>
-            <td>2929484</td>
-            <td>leader of the second deliverable</td>
-            <td>
                 responsible for implementing the following pages: about_us.jsp, view_product.jsp, shoppingCart.jsp, login, logout, edit user info<br/>
-                which enble administrator to manage the cars and employees.
+            </td>
+        </tr>
+       
+        <tr>
+            <td><img src="" class="img-rounded" style="width:140px;height:140px;"></td>
+            <td>Carlos</td>
+            <td>3512223</td>
+            <td>bid product</td>
+            <td>responsible for implementing the web pages: bid_products.jsp,<br/> 
+                And created the logic and database. <br/>
             </td>
         </tr>
         <tr>
             <td><img src="" class="img-rounded" style="width:140px;height:140px;"></td>
-            <td>Name</td>
-            <td>6644890</td>
-            <td>leader of the user manual</td>
-            <td>responsible for implementing the web pages: select_cartype.jsp and reserve_car.jsp,<br/> 
-                which are for the users reserving car's process. <br/>
-            </td>
-        </tr>
-        <tr>
-            <td><img src="" class="img-rounded" style="width:140px;height:140px;"></td>
-            <td>Name</td>
-            <td>43245542</td>
-            <td>leader for the first deliverable</td>
+            <td>Amit</td>
+            <td>5570238</td>
+            <td>buy_now products</td>
             <td>
-               n/a.<br/>
-                n/a<br/>
-                n/a</td>
+             responsible for implementing the web pages: index.jsp, buynowManager class<br/>
+                and the logic assiociated with it<br/>
+              
         </tr>
         <tr>
             <td><img src="" class="img-rounded" style="width:140px;height:140px;"></td>
-            <td>Name</td>
-            <td>4672552</td>
-            <td>leader of the test specification document</td>
-            <td>responsible for implementing two web pages: rent_car.jsp and return_car.jsp,<br/> 
-                which represents the front-desk employee's routine work. <br/>
-                These two pages enable a front-desk employee to help users pick up a car <br/> and return a car.
-                Picture are included.</td>
+            <td>Rosmar</td>
+            <td>3372737</td>
+            <td>Front end design (original design not used here)</td>
+            <td>responsible for providing the original HTML and CSS: Later on during the semester,<br/> 
+                the group decided to go with bootstrap instead of the HTML provided.
+                </td>
         </tr>
     </table>
 </div>

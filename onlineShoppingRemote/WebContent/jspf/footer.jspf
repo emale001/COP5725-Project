@@ -5,11 +5,11 @@
         <div class="span4"></div>
         <div>
             <ul class="nav nav-pills" style="margin-bottom:2px;">
-                <li><a href="#" class="mid_font">fistname</a></li>
-                <li><a href="manage_car.jsp" class="mid_font">Edwin</a></li>
-                <li><a href="#" class="mid_font">firstname</a></li>
-                <li><a href="#" class="mid_font">firstname</a></li>
-                <li><a href="#" class="mid_font">firstname</a></li> 
+                <li><a href="index.jsp" class="mid_font">Amit</a></li>
+                <li><a href="view_products.jsp" class="mid_font">Edwin</a></li>
+                <li><a href="bid_products.jsp" class="mid_font">Carlos</a></li>
+                <li><a href="#" class="mid_font">Rosmar</a></li>
+              
             </ul>                  
         </div>
     </div>    

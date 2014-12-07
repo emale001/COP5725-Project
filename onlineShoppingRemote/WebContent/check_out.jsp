@@ -34,7 +34,9 @@
 
 
 <!-- uncomment this script to unable credit card regex check -->
+
  <script>
+
     // init the datetimepicker and validationEngine
     $(document).ready(function() {
 
@@ -50,6 +52,7 @@
 
 
 </script>  
+
 
 <div>
 	<div>

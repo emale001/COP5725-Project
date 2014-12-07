@@ -1,8 +1,4 @@
-<%-- 
-    Document   : control_panel
-    Created on : Nov 11, 2013, 10:03:05 PM
-    Author     : changliu
---%>
+
 <script>
     $("p").mouseover(function() {
         $("p").css("color", "black");
